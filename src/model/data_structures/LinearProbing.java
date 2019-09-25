@@ -2,7 +2,7 @@ package model.data_structures;
 
 import java.util.Iterator;
 
-public class LinearProbing<K, V> 
+public class LinearProbing<K, V> implements ILinearProbing<K, V>
 {
     
 
@@ -200,6 +200,7 @@ public class LinearProbing<K, V>
         }
         return true;
     }
+
 
 
 

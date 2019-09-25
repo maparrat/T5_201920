@@ -2,7 +2,7 @@ package model.data_structures;
 
 import java.util.Iterator;
 
-public class SeparateChaining<K, V> 
+public class SeparateChaining<K, V> implements ISeparateChaining<K, V>
 {
 	private int N;                                // number of key-value pairs
 	private int M;                                // hash table size
