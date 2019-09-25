@@ -1,0 +1,3 @@
+en la clase  separate... cambiar metodo delete  e iterator 
+hacer interfases
+en la clase  linear... cambiar metodo  delete  e iterator 
