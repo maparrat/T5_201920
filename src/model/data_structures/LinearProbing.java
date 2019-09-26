@@ -2,72 +2,77 @@ package model.data_structures;
 
 import java.util.Iterator;
 
+/** 
+ * Implementación tomada de Algorithms 4th edition by Robert Sedgewick and Kevin Wayne (2011)
+ * Consultado el 25/09/19
+ * Disponible en https://algs4.cs.princeton.edu/code/
+ */
 public class LinearProbing<K, V> implements ILinearProbing<K, V>
 {
-    
-
     private int N;           // number of key-value pairs in the symbol table
     private int M;           // size of linear probing table
-    private K[] keys;      // the keys
-    private V[] vals;    // the values
-
-
-   
+    private K[] keys;     	 // the keys
+    private V[] vals;   	 // the values   
 
     /**
      * Initializes an empty symbol table with the specified initial capacity.
      *
      * @param capacity the initial capacity
      */
-    public LinearProbing(int capacity) {
+    public LinearProbing(int capacity)
+    {
         M = capacity;
         N = 0;
-        keys = (K[])   new Object[M];
+        keys = (K[]) new Object[M];
         vals = (V[]) new Object[M];
     }
 
     /**
      * Returns the number of key-value pairs in this symbol table.
-     *
      * @return the number of key-value pairs in this symbol table
      */
-    public int size() {
+    public int size()
+    {
         return N;
     }
 
     /**
      * Returns true if this symbol table is empty.
-     *
      * @return {@code true} if this symbol table is empty;
      *         {@code false} otherwise
      */
-    public boolean isEmpty() {
+    public boolean isEmpty()
+    {
         return size() == 0;
     }
 
     /**
      * Returns true if this symbol table contains the specified key.
-     *
      * @param  key the key
      * @return {@code true} if this symbol table contains {@code key};
      *         {@code false} otherwise
      * @throws IllegalArgumentException if {@code key} is {@code null}
      */
-    public boolean contains(K key) {
+    public boolean contains(K key)
+    {
         if (key == null) throw new IllegalArgumentException("argument to contains() is null");
         return get(key) != null;
     }
 
     // hash function for keys - returns value between 0 and M-1
-    private int hash(K key) {
+    private int hash(K key)
+    {
         return (key.hashCode() & 0x7fffffff) % M;
     }
 
     // resizes the hash table to the given capacity by re-hashing all of the keys
-    private void rehash(int capacity) {
+    private void rehash(int capacity)
+    {
         LinearProbing<K, V> temp = new LinearProbing<K, V>(capacity);
-        for (int i = 0; i < M; i++) {
-            if (keys[i] != null) {
+        for (int i = 0; i < M; i++)
+        {
+            if (keys[i] != null)
+            {
                 temp.put(keys[i], vals[i]);
             }
         }
@@ -81,25 +86,28 @@ public class LinearProbing<K, V> implements ILinearProbing<K, V>
      * value with the new value if the symbol table already contains the specified key.
      * Deletes the specified key (and its associated value) from this symbol table
      * if the specified value is {@code null}.
-     *
      * @param  key the key
      * @param  val the value
      * @throws IllegalArgumentException if {@code key} is {@code null}
      */
-    public void put(K key, V val) {
+    public void put(K key, V val)
+    {
         if (key == null) throw new IllegalArgumentException("first argument to put() is null");
 
-        if (val == null) {
+        if (val == null)
+        {
             delete(key);
             return;
         }
 
-        // double table size if 50% full
+        // double table size if 75% full
         if ((double) N/M > 0.75) rehash(2*M);
 
         int i;
-        for (i = hash(key); keys[i] != null; i = (i + 1) % M) {
-            if (keys[i].equals(key)) {
+        for (i = hash(key); keys[i] != null; i = (i + 1) % M)
+        {
+            if (keys[i].equals(key))
+            {
                 vals[i] = val;
                 return;
             }
@@ -116,7 +124,8 @@ public class LinearProbing<K, V> implements ILinearProbing<K, V>
      *         {@code null} if no such value
      * @throws IllegalArgumentException if {@code key} is {@code null}
      */
-    public V get(K key) {
+    public V get(K key)
+    {
         if (key == null) throw new IllegalArgumentException("argument to get() is null");
         for (int i = hash(key); keys[i] != null; i = (i + 1) % M)
             if (keys[i].equals(key))
@@ -126,30 +135,34 @@ public class LinearProbing<K, V> implements ILinearProbing<K, V>
 
     /**
      * Removes the specified key and its associated value from this symbol table     
-     * (if the key is in this symbol table).    
-     *
+     * (if the key is in this symbol table).
      * @param  key the key
      * @throws IllegalArgumentException if {@code key} is {@code null}
      */
-    public V delete(K key) {
+    public V delete(K key)
+    {
         if (key == null) throw new IllegalArgumentException("argument to delete() is null");
-        if (!contains(key)) return;
+        if (!contains(key)) return null;
 
         // find position i of key
         int i = hash(key);
-        while (!key.equals(keys[i])) {
+        while (!key.equals(keys[i]))
+        {
             i = (i + 1) % M;
         }
 
+        V respuesta = vals[i];
+        
         // delete key and associated value
         keys[i] = null;
         vals[i] = null;
 
         // rehash all keys in same cluster
         i = (i + 1) % M;
-        while (keys[i] != null) {
+        while (keys[i] != null)
+        {
             // delete keys[i] an vals[i] and reinsert
-            K   keyToRehash = keys[i];
+            K keyToRehash = keys[i];
             V valToRehash = vals[i];
             keys[i] = null;
             vals[i] = null;
@@ -160,20 +173,19 @@ public class LinearProbing<K, V> implements ILinearProbing<K, V>
 
         N--;
 
-        // halves size of array if it's 12.5% full or less
-        if ((double) N/M > 0.75) rehash(M/2);
-
         assert check();
+        
+        return respuesta;
     }
 
     /**
      * Returns all keys in this symbol table as an {@code Iterable}.
      * To iterate over all of the keys in the symbol table named {@code st},
      * use the foreach notation: {@code for (Key key : st.keys())}.
-     *
      * @return all keys in this symbol table
      */
-    public Iterator<K> keys() {
+    public Iterator<K> keys()
+    {
         Queue<K> queue = new Queue<K>();
         for (int i = 0; i < M; i++)
             if (keys[i] != null) queue.enqueue(keys[i]);
@@ -200,8 +212,4 @@ public class LinearProbing<K, V> implements ILinearProbing<K, V>
         }
         return true;
     }
-
-
-
-
 }
