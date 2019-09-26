@@ -6,3 +6,7 @@ Librerias
 CSV de:
 https://mvnrepository.com/artifact/com.opencsv/opencsv/4.0
 https://mvnrepository.com/artifact/org.apache.commons/commons-lang3/3.8.1
+
+Implementación estructuras de datos:
+Tomadas de:
+https://algs4.cs.princeton.edu/code/

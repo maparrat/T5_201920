@@ -1,3 +1,5 @@
 En la clase Linearprobing cambiar metodo iterator
 En la clase SeparateChaining cambiar metodo iterator
 En la clase SequentialSearchST cambiar metodo iterator
+Pruebas unitarias para las 4 operaciones principales de LinearProbing
+Pruebas unitarias para las 4 operaciones principales de SeparateChaining

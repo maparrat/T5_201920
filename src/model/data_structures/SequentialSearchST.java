@@ -6,7 +6,7 @@ package model.data_structures;
  * Consultado el 25/09/19
  * Disponible en https://algs4.cs.princeton.edu/code/
  */
-public class SequentialSearchST<Key, Value>
+public class SequentialSearchST<K, V>
 {
 	private int N;           // number of key-value pairs
 	private Node first;      // the linked list of key-value pairs
@@ -14,11 +14,11 @@ public class SequentialSearchST<Key, Value>
 	// a helper linked list data type
 	private class Node
 	{
-		private Key key;
-		private Value val;
+		private K key;
+		private V val;
 		private Node next;
 
-		public Node(Key key, Value val, Node next) 
+		public Node(K key, V val, Node next) 
 		{
 			this.key  = key;
 			this.val  = val;
@@ -58,7 +58,7 @@ public class SequentialSearchST<Key, Value>
 	 *         {@code false} otherwise
 	 * @throws IllegalArgumentException if {@code key} is {@code null}
 	 */
-	public boolean contains(Key key)
+	public boolean contains(K key)
 	{
 		if (key == null) throw new IllegalArgumentException("argument to contains() is null");
 		return get(key) != null;
@@ -71,7 +71,7 @@ public class SequentialSearchST<Key, Value>
 	 *     and {@code null} if the key is not in the symbol table
 	 * @throws IllegalArgumentException if {@code key} is {@code null}
 	 */
-	public Value get(Key key)
+	public V get(K key)
 	{
 		if (key == null) throw new IllegalArgumentException("argument to get() is null"); 
 		for (Node x = first; x != null; x = x.next)
@@ -91,7 +91,7 @@ public class SequentialSearchST<Key, Value>
 	 * @param  val the value
 	 * @throws IllegalArgumentException if {@code key} is {@code null}
 	 */
-	public void put(Key key, Value val)
+	public void put(K key, V val)
 	{
 		if (key == null) throw new IllegalArgumentException("first argument to put() is null"); 
 		if (val == null)
@@ -119,7 +119,7 @@ public class SequentialSearchST<Key, Value>
 	 * @param  key the key
 	 * @throws IllegalArgumentException if {@code key} is {@code null}
 	 */
-	public Value delete(Key key)
+	public V delete(K key)
 	{
 		if (key == null) throw new IllegalArgumentException("argument to delete() is null");
 
@@ -156,8 +156,8 @@ public class SequentialSearchST<Key, Value>
 	 * use the foreach notation: {@code for (Key key : st.keys())}.
 	 * @return all keys in the symbol table
 	 */
-	public Iterable<Key> keys()  {
-		Queue<Key> queue = new Queue<Key>();
+	public Iterable<K> keys()  {
+		Queue<K> queue = new Queue<K>();
 		for (Node x = first; x != null; x = x.next)
 			queue.enqueue(x.key);
 		return queue;
