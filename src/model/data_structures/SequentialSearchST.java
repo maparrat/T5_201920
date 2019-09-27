@@ -1,5 +1,7 @@
 package model.data_structures;
 
+import java.util.Iterator;
+
 /** 
  * Clase auxiliar para la estructura Separate chaining
  * Tomado de Algorithms 4th edition by Robert Sedgewick and Kevin Wayne (2011)
@@ -23,6 +25,26 @@ public class SequentialSearchST<K, V>
 			this.key  = key;
 			this.val  = val;
 			this.next = next;
+		}
+		
+		public void asignarDato(V pDato) 
+		{
+			val = pDato;
+		}
+		
+		public void asignarSiguiente(Node pSiguiente) 
+		{
+			next = pSiguiente;
+		}
+		
+		public Node darSiguente()
+		{
+			return next;
+		}
+		
+		public V darDato()
+		{
+			return val;
 		}
 	}
 
@@ -156,7 +178,7 @@ public class SequentialSearchST<K, V>
 	 * use the foreach notation: {@code for (Key key : st.keys())}.
 	 * @return all keys in the symbol table
 	 */
-	public Iterable<K> keys()  {
+	public Iterator<K> keys()  {
 		Queue<K> queue = new Queue<K>();
 		for (Node x = first; x != null; x = x.next)
 			queue.enqueue(x.key);

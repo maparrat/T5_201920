@@ -27,14 +27,16 @@ public class SeparateChaining<K, V> implements ISeparateChaining<K, V>
 
 	// resize the hash table to have the given number of chains,
 	// rehashing all of the keys
-	private void rehash(int chains)
+	public void rehash(int chains)
 	{
 		SeparateChaining<K, V> temp = new SeparateChaining<K, V>(chains);
 		for (int i = 0; i < M; i++)
 		{
-			for (K key : st[i].keys())
+			Iterator<K> x = st[i].keys();
+			while(x.hasNext())
 			{
-				temp.put(key, st[i].get(key));
+				K y = x.next();
+				temp.put(y, st[i].get(y));
 			}
 		}
 		M = temp.M;
@@ -138,9 +140,17 @@ public class SeparateChaining<K, V> implements ISeparateChaining<K, V>
 	{
 		Queue<K> queue = new Queue<K>();
 		for (int i = 0; i < M; i++) {
-			for (K key : st[i].keys())
-				queue.enqueue(key);
+			Iterator<K> temp = st[i].keys();
+			while(temp.hasNext())
+			{
+				queue.enqueue(temp.next());
+			}
 		}
 		return queue;
-	} 
+	}
+
+	public int tamanoArreglo()
+	{
+		return M;
+	}
 }

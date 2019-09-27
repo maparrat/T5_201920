@@ -1,7 +1,8 @@
 package test.data_structures;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+
+import java.util.Iterator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -48,17 +49,53 @@ public class TestSeparateChaining
 	public void testGet()
 	{
 		setUp2();
+		assertEquals("A", sc.get(1));
+		assertEquals("B", sc.get(2));
+		assertEquals("C", sc.get(3));
+		assertEquals("D", sc.get(4));
+		assertEquals("E", sc.get(5));
+		assertNotEquals("A", sc.get(6));
+		assertNotEquals("A", sc.get(7));
+		assertNotEquals("A", sc.get(8));
+		assertNotEquals("A", sc.get(9));
+		assertNotEquals("A", sc.get(10));
 	}
 
 	@Test
 	public void testDelete()
 	{
 		setUp2();
+		assertEquals("A", sc.delete(1));
+		assertNull(sc.get(1));
+		assertEquals("B", sc.delete(2));
+		assertNull(sc.get(2));
+		assertEquals("C", sc.delete(3));
+		assertNull(sc.get(3));
+		assertEquals("D", sc.delete(4));
+		assertNull(sc.get(4));
+		assertEquals("E", sc.delete(5));
+		assertNull(sc.get(5));
 	}
-
+	
 	@Test
 	public void testKeys()
 	{
 		setUp2();
-	}	
+		Iterator<Integer> respuesta = sc.keys();
+		
+		assertTrue(respuesta.hasNext());
+		
+		for (int i = 0; i < 10; i++)
+		{
+			respuesta.next();
+		}
+		assertFalse(respuesta.hasNext());
+	}
+	
+	@Test
+	public void testRehash()
+	{
+		sc.rehash(4);
+		assertEquals(4, sc.tamanoArreglo());
+	}
 }

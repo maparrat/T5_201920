@@ -66,7 +66,7 @@ public class LinearProbing<K, V> implements ILinearProbing<K, V>
     }
 
     // resizes the hash table to the given capacity by re-hashing all of the keys
-    private void rehash(int capacity)
+    public void rehash(int capacity)
     {
         LinearProbing<K, V> temp = new LinearProbing<K, V>(capacity);
         for (int i = 0; i < M; i++)
@@ -212,4 +212,9 @@ public class LinearProbing<K, V> implements ILinearProbing<K, V>
         }
         return true;
     }
+    
+	public int tamanoArreglo()
+	{
+		return M;
+	}
 }
