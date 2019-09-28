@@ -57,7 +57,114 @@ public class MVCModelo{
 		}
 		reader.close();
 	}
+	public double[] tiemposLineal()
+	{
+		double[] respuesta =  new double[3];
+		// Crea el linealProbing con 8000 datos
+		LinearProbing<Integer,Integer > tabla = new LinearProbing<>(8000);
 
+		for(Integer i = 0; i< 8000;i++)
+		{
+			tabla.put(i, i);
+		}
+		//Genera arreglo de tiempos y crea los 10000 get para datos aleatorios 
+		long[] tiempos = new long[10000];
+
+		for(int i = 0; i<10000 ; i++)
+		{
+			long startTime = System.currentTimeMillis();
+			int valorDado = (int) Math.floor(Math.random()*9999+1);
+			tabla.get(valorDado);
+			long endTime = System.currentTimeMillis() - startTime;
+			tiempos[i] = endTime;
+		}
+		//Ordena los tiempos 
+		int indiceMenor, i, j, n;
+		n = tiempos.length;
+		for (i = 0; i < n-1; i++)
+		{
+			// comienzo de la exploración en índice i
+			indiceMenor = i;
+			// j explora la sublista a[i+1]..a[n-1]
+			for (j = i+1; j < n; j++)
+				if (tiempos[j] < tiempos[indiceMenor])
+					indiceMenor = j;
+			// sitúa el elemento mas pequeño en a[i]
+			if (i != indiceMenor)
+				intercambiar(tiempos, i, indiceMenor);
+		}
+		//Agrega el valor minimo y maximo
+		respuesta[0] =  tiempos[0];
+		respuesta[2] =  tiempos[9999];
+		//Calcula el promedio
+		double suma= 0;
+		for(int x = 0; x <10000;x++)
+		{
+			suma= (suma+ tiempos[x]);
+		}
+		double promedio  = (suma/10000);
+		//agrega el promedio
+		respuesta[1] = promedio;
+		return respuesta;
+
+	}
+	public double[] tiemposSeparate()
+	{
+		double[] respuesta =  new double[3];
+		// Crea el linealProbing con 8000 datos
+		SeparateChaining<Integer, Integer> tabla = new SeparateChaining<>(8000);
+
+		for(Integer i = 0; i< 8000;i++)
+		{
+			tabla.put(i, i);
+		}
+		//Genera arreglo de tiempos y crea los 10000 get para datos aleatorios 
+		long[] tiempos = new long[10000];
+
+		for(int i = 0; i<10000 ; i++)
+		{
+			long startTime = System.currentTimeMillis();
+			int valorDado = (int) Math.floor(Math.random()*9999+1);
+			tabla.get(valorDado);
+			long endTime = System.currentTimeMillis() - startTime;
+			tiempos[i] = endTime;
+		}
+		//Ordena los tiempos 
+		int indiceMenor, i, j, n;
+		n = tiempos.length;
+		for (i = 0; i < n-1; i++)
+		{
+			// comienzo de la exploración en índice i
+			indiceMenor = i;
+			// j explora la sublista a[i+1]..a[n-1]
+			for (j = i+1; j < n; j++)
+				if (tiempos[j] < tiempos[indiceMenor])
+					indiceMenor = j;
+			// sitúa el elemento mas pequeño en a[i]
+			if (i != indiceMenor)
+				intercambiar(tiempos, i, indiceMenor);
+		}
+		//Agrega el valor minimo y maximo
+		respuesta[0] =  tiempos[0];
+		respuesta[2] =  tiempos[9999];
+		//Calcula el promedio
+		double suma= 0;
+		for(int x = 0; x <10000;x++)
+		{
+			suma= (suma+ tiempos[x]);
+		}
+		double promedio  = (suma/10000);
+		//agrega el promedio
+		respuesta[1] = promedio;
+		return respuesta;
+
+	}
+	public static void intercambiar(long []a, int i, int j)
+	{
+		long aux = a[i];
+		a[i] = a[j];
+		a[j]= aux ;
+	}
 	/**
 	 * Retorna el número de elementos en el modelo
 	 * @return numero de elementos presentes en el modelo

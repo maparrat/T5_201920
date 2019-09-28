@@ -7,6 +7,5 @@ trimestre, sourceid, dstid, dow, mean_travel_time
 respectivos. El resultado debe estar ordenado por día de la semana (dow). De cada viaje en el resultado
 se debe mostrar:
 trimestre, sourceid, dstid, dow, mean_travel_time
-10)Lineal hacer un método que haga 10.000 consultas get(…) aleatorias (8.000 de llaves existentes y 2.000 de llaves que no existen en la tabla)
-11)secuancial hacer un método que haga 10.000 Secuencialconsultas get(…) aleatorias (8.000 de llaves existentes y 2.000 de llaves que no existen en la tabla)  
+
 12)llenar doc

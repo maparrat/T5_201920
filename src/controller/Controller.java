@@ -102,6 +102,19 @@ public class Controller {
 				}
 
 				break;
+			case 4:
+				System.out.println("LinearProbing: ");
+				double x []= modelo.tiemposLineal();
+				System.out.println("El mejor tiempo: "+x[0] +"Milisegundos");
+				System.out.println("El tiempo promedio: "+x[1]+"Milisegundos");
+				System.out.println("El peor tiempo: "+x[2]+"Milisegundos");
+				System.out.println("---------------------");
+				System.out.println("SeparateChaining: ");
+				double y []= modelo.tiemposSeparate();
+				System.out.println("El mejor tiempo: "+y[0]+"Milisegundos");
+				System.out.println("El tiempo promedio: "+y[1]+"Milisegundos");
+				System.out.println("El peor tiempo: "+y[2]+"Milisegundos");
+				break;
 
 			case 5: 
 				System.out.println("--------- \n Hasta pronto !! \n---------"); 
