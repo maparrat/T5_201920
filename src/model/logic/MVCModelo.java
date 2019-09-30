@@ -7,6 +7,7 @@ import com.opencsv.CSVReader;
 import model.data_structures.INode;
 import model.data_structures.LinearProbing;
 import model.data_structures.Node;
+import model.data_structures.Queue;
 import model.data_structures.SeparateChaining;
 
 /**
@@ -65,6 +66,108 @@ public class MVCModelo{
 		reader.close();
 		return respuesta;
 	}
+	
+	public UBERTrip[] tiemposDeViajeLinearProbing(int trimestre, int idOrigen, int idDestino)
+	{
+		LinearProbing<String, UBERTrip> temp = new LinearProbing<>(1);
+		Queue llaves = (Queue) lp.keys();
+		
+		while(llaves.hasNext())
+		{
+			String actual = (String) llaves.next();
+			UBERTrip datoActual = lp.get(actual);
+			
+			if(datoActual.darDatosViaje()[0] == idOrigen && datoActual.darDatosViaje()[1] == idDestino)
+			{
+				temp.put(actual, datoActual);
+			}
+		}
+		
+		UBERTrip[] respuesta = new UBERTrip[temp.darNumeroDeElementos()];
+		
+		Queue llavesTemp = (Queue) temp.keys();
+
+		int k = 0;
+		while(llavesTemp.hasNext())
+		{
+			String actual = (String) llavesTemp.next();
+			
+			respuesta[k] = temp.get(actual);
+			k++;
+		}
+		
+		//Ordenamiento por inserción
+		for (int i = 0; i < respuesta.length; i++)
+		{
+			boolean enPos = false;
+			for (int j = i; j > 0 && !enPos; j--)
+			{				
+				if(respuesta[j].darDatosViaje()[2] < respuesta[j-1].darDatosViaje()[2])
+				{
+					UBERTrip copia = respuesta[j-1];
+					respuesta[j-1] = respuesta[j];
+					respuesta[j] = copia;
+				}
+				else
+				{
+					enPos = true;
+				}
+			}
+		}
+		
+		return respuesta;		
+	}
+	
+	public UBERTrip[] tiemposDeViajeSeparateChaining(int trimestre, int idOrigen, int idDestino)
+	{
+		SeparateChaining<String, UBERTrip> temp = new SeparateChaining<>(1);
+		Queue llaves = (Queue) sc.keys();
+		
+		while(llaves.hasNext())
+		{
+			String actual = (String) llaves.next();
+			UBERTrip datoActual = sc.get(actual);
+			
+			if(datoActual.darDatosViaje()[0] == idOrigen && datoActual.darDatosViaje()[1] == idDestino)
+			{
+				temp.put(actual, datoActual);
+			}
+		}
+		
+		UBERTrip[] respuesta = new UBERTrip[temp.darNumeroDeElementos()];
+		
+		Queue llavesTemp = (Queue) temp.keys();
+
+		int k = 0;
+		while(llavesTemp.hasNext())
+		{
+			String actual = (String) llavesTemp.next();
+			
+			respuesta[k] = temp.get(actual);
+			k++;
+		}
+		
+		//Ordenamiento por inserción
+		for (int i = 0; i < respuesta.length; i++)
+		{
+			boolean enPos = false;
+			for (int j = i; j > 0 && !enPos; j--)
+			{				
+				if(respuesta[j].darDatosViaje()[2] < respuesta[j-1].darDatosViaje()[2])
+				{
+					UBERTrip copia = respuesta[j-1];
+					respuesta[j-1] = respuesta[j];
+					respuesta[j] = copia;
+				}
+				else
+				{
+					enPos = true;
+				}
+			}
+		}
+		
+		return respuesta;		
+	}	
 
 	public double[] tiemposLineal()
 	{

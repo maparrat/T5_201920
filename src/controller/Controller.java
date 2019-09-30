@@ -40,7 +40,7 @@ public class Controller {
 
 			String in;
 			in = lector.next();
-			
+
 			int option;
 			try
 			{
@@ -66,18 +66,18 @@ public class Controller {
 					break;
 				}
 
-				if(numeroTrimestre >= 1 || numeroTrimestre <= 4)
+				if(numeroTrimestre >= 1 && numeroTrimestre <= 4)
 				{
 					try
 					{	
 						UBERTrip[] respuesta = modelo.cargarArchivoCSVWeekly(numeroTrimestre);
-						
+
 						System.out.println("Archivo cargado");
 						System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");
-						
+
 						UBERTrip primero = respuesta[0];
 						UBERTrip ultimo = respuesta[1];
-						
+
 						System.out.println("Datos primer viaje:\nId zona origen: " + primero.darDatosViaje()[0] + "\nId zona destino: " + primero.darDatosViaje()[1] + "\nDía de la semana: " + primero.darDatosViaje()[2] + "\nTiempo promedio de viaje: " + primero.darDatosViaje()[3] + "\n---------");
 						System.out.println("Datos último viaje:\nId zona origen: " + ultimo.darDatosViaje()[0] + "\nId zona destino: " + ultimo.darDatosViaje()[1] + "\nDía de la semana: " + ultimo.darDatosViaje()[2] + "\nTiempo promedio de viaje: " + ultimo.darDatosViaje()[3] + "\n---------");
 					}
@@ -94,14 +94,17 @@ public class Controller {
 
 			case 2:
 
-				double mes;
-				double zonaOrigen;
+				int trimestreLp;
+				int zonaOrigenLp;
+				int zonaDestinoLp;
 				try
 				{
-					System.out.println("--------- \nDar mes a buscar: ");
-					mes = lector.nextInt();
+					System.out.println("--------- \nDar trimestre a buscar: ");
+					trimestreLp = lector.nextInt();
 					System.out.println("--------- \nDar id zona de origen a buscar: ");
-					zonaOrigen = lector.nextInt();
+					zonaOrigenLp = lector.nextInt();
+					System.out.println("--------- \nDar id zona de destino a buscar: ");
+					zonaDestinoLp = lector.nextInt();
 				}
 				catch(InputMismatchException e)
 				{
@@ -109,7 +112,84 @@ public class Controller {
 					break;
 				}
 
+				if(trimestreLp >= 1 && trimestreLp <= 4)
+				{
+					UBERTrip[] viajes = modelo.tiemposDeViajeLinearProbing(trimestreLp, zonaOrigenLp, zonaDestinoLp);
+
+					if(viajes.length == 0)
+					{
+						System.out.println("No hay viajes registrados con los datos datos.\n---------");
+
+					}
+					else
+					{
+						int i = 1;
+						for(UBERTrip actual: viajes) 
+						{
+							if(actual != null)
+							{
+								System.out.println("Datos viaje #" + i + ":\nTrimestre: " + trimestreLp + "\nId zona origen: " + actual.darDatosViaje()[0] + "\nId zona destino: " + actual.darDatosViaje()[1] + "\nDía de la semana: " + actual.darDatosViaje()[2] + "\nTiempo promedio de viaje: " + actual.darDatosViaje()[3] + "\n---------");
+								i++;
+							}
+						}
+					}
+				}
+				else
+				{
+					System.out.println("Ingrese un valor válido (1 o 4)\n---------");	
+				}			
+
 				break;
+				
+			case 3:
+
+				int trimestreSc;
+				int zonaOrigenSc;
+				int zonaDestinoSc;
+				try
+				{
+					System.out.println("--------- \nDar trimestre a buscar: ");
+					trimestreSc = lector.nextInt();
+					System.out.println("--------- \nDar id zona de origen a buscar: ");
+					zonaOrigenSc = lector.nextInt();
+					System.out.println("--------- \nDar id zona de destino a buscar: ");
+					zonaDestinoSc = lector.nextInt();
+				}
+				catch(InputMismatchException e)
+				{
+					System.out.println("Debe ingresar valores numéricos\n---------");
+					break;
+				}
+
+				if(trimestreSc >= 1 && trimestreSc <= 4)
+				{
+					UBERTrip[] viajes = modelo.tiemposDeViajeSeparateChaining(trimestreSc, zonaOrigenSc, zonaDestinoSc);
+
+					if(viajes.length == 0)
+					{
+						System.out.println("No hay viajes registrados con los datos datos.\n---------");
+
+					}
+					else
+					{
+						int i = 1;
+						for(UBERTrip actual: viajes) 
+						{
+							if(actual != null)
+							{
+								System.out.println("Datos viaje #" + i + ":\nTrimestre: " + trimestreSc + "\nId zona origen: " + actual.darDatosViaje()[0] + "\nId zona destino: " + actual.darDatosViaje()[1] + "\nDía de la semana: " + actual.darDatosViaje()[2] + "\nTiempo promedio de viaje: " + actual.darDatosViaje()[3] + "\n---------");
+								i++;
+							}
+						}
+					}
+				}
+				else
+				{
+					System.out.println("Ingrese un valor válido (1 o 4)\n---------");	
+				}			
+
+				break;
+
 			case 4:
 				System.out.println("LinearProbing: ");
 				double x []= modelo.tiemposLineal();
