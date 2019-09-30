@@ -69,8 +69,9 @@ public class Controller {
 				if(numeroTrimestre >= 1 || numeroTrimestre <= 4)
 				{
 					try
-					{
+					{	
 						UBERTrip[] respuesta = modelo.cargarArchivoCSVWeekly(numeroTrimestre);
+						
 						System.out.println("Archivo cargado");
 						System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");
 						

@@ -149,6 +149,11 @@ public class SeparateChaining<K, V> implements ISeparateChaining<K, V>
 		return queue;
 	}
 
+    public int darNumeroDeElementos()
+    {
+		return N;
+    }
+	
 	public int tamanoArreglo()
 	{
 		return M;

@@ -41,7 +41,7 @@ public class MVCModelo{
 	{
 		boolean primeraLectura = true;
 		UBERTrip[] respuesta = new UBERTrip[2];
-		
+
 		CSVReader reader = new CSVReader(new FileReader("./data/bogota-cadastral-2018-" + trimestre + "-WeeklyAggregate.csv"));
 
 		for(String[] line: reader)
@@ -53,7 +53,7 @@ public class MVCModelo{
 				lp.put(key, nuevo);
 				sc.put(key, nuevo);
 				tamano++;
-				
+
 				if(respuesta[0] == null)
 				{
 					respuesta[0] = nuevo;
@@ -65,7 +65,7 @@ public class MVCModelo{
 		reader.close();
 		return respuesta;
 	}
-	
+
 	public double[] tiemposLineal()
 	{
 		double[] respuesta =  new double[3];
@@ -181,5 +181,33 @@ public class MVCModelo{
 	public int darTamano()
 	{
 		return tamano;
+	}
+
+	public int[] darDatosLinearProbing()
+	{
+		int N = lp.darNumeroDeElementos();
+		int M = lp.tamanoArreglo();
+
+		int[] respuesta = new int[4];
+		respuesta[0] = N;
+		respuesta[1] = M;
+		double factorCarga = (N*100/M);
+		respuesta[2] = (int) factorCarga;
+		respuesta[3] = (int)(Math.log(M)/Math.log(2));
+		return respuesta;
+	}
+	
+	public int[] darDatosSeparateChaining()
+	{
+		int N = sc.darNumeroDeElementos();
+		int M = sc.tamanoArreglo();
+
+		int[] respuesta = new int[4];
+		respuesta[0] = N;
+		respuesta[1] = M;
+		double factorCarga = (N*100/M);
+		respuesta[2] = (int) factorCarga;
+		respuesta[3] = (int)(Math.log(M)/Math.log(2));
+		return respuesta;
 	}
 }

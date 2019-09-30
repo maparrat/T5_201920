@@ -213,6 +213,11 @@ public class LinearProbing<K, V> implements ILinearProbing<K, V>
         return true;
     }
     
+    public int darNumeroDeElementos()
+    {
+		return N;
+    }
+    
 	public int tamanoArreglo()
 	{
 		return M;
