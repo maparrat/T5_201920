@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import model.data_structures.Node;
 import model.logic.MVCModelo;
+import model.logic.UBERTrip;
 import view.MVCView;
 
 public class Controller {
@@ -69,9 +70,15 @@ public class Controller {
 				{
 					try
 					{
-						modelo.cargarArchivoCSVWeekly(numeroTrimestre);
+						UBERTrip[] respuesta = modelo.cargarArchivoCSVWeekly(numeroTrimestre);
 						System.out.println("Archivo cargado");
 						System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");
+						
+						UBERTrip primero = respuesta[0];
+						UBERTrip ultimo = respuesta[1];
+						
+						System.out.println("Datos primer viaje:\nId zona origen: " + primero.darDatosViaje()[0] + "\nId zona destino: " + primero.darDatosViaje()[1] + "\nDía de la semana: " + primero.darDatosViaje()[2] + "\nTiempo promedio de viaje: " + primero.darDatosViaje()[3] + "\n---------");
+						System.out.println("Datos último viaje:\nId zona origen: " + ultimo.darDatosViaje()[0] + "\nId zona destino: " + ultimo.darDatosViaje()[1] + "\nDía de la semana: " + ultimo.darDatosViaje()[2] + "\nTiempo promedio de viaje: " + ultimo.darDatosViaje()[3] + "\n---------");
 					}
 					catch (Exception e)
 					{

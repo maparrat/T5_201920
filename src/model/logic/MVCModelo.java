@@ -37,10 +37,11 @@ public class MVCModelo{
 	 * Metodo que carga los archivos
 	 * @param prutaArchivo CSV
 	 */
-	public void cargarArchivoCSVWeekly(int trimestre) throws Exception
+	public UBERTrip[] cargarArchivoCSVWeekly(int trimestre) throws Exception
 	{
 		boolean primeraLectura = true;
-
+		UBERTrip[] respuesta = new UBERTrip[2];
+		
 		CSVReader reader = new CSVReader(new FileReader("./data/bogota-cadastral-2018-" + trimestre + "-WeeklyAggregate.csv"));
 
 		for(String[] line: reader)
@@ -49,14 +50,22 @@ public class MVCModelo{
 			{
 				UBERTrip nuevo = new UBERTrip(Short.parseShort(line[0]), Short.parseShort(line[1]), Short.parseShort(line[2]), Float.parseFloat(line[3]), Float.parseFloat(line[4]), Float.parseFloat(line[5]), Float.parseFloat(line[6])); 
 				String key = trimestre + "-" + line[0] + "-" + line[1];
-				sc.put(key, nuevo);
+				lp.put(key, nuevo);
 				sc.put(key, nuevo);
 				tamano++;
+				
+				if(respuesta[0] == null)
+				{
+					respuesta[0] = nuevo;
+				}
+				respuesta[1] = nuevo;
 			}
 			primeraLectura = false;
 		}
 		reader.close();
+		return respuesta;
 	}
+	
 	public double[] tiemposLineal()
 	{
 		double[] respuesta =  new double[3];
